@@ -8,17 +8,5 @@ body{
 
 @theme {
   --font-orbitron: "Orbitron", "sans-serif";
-  --animate-typing: typing 10s steps(20) infinite;
 }
 
-@keyframes typing {
-  0% {
-    width: 0;
-  }
-  50% {
-    width: 100%;
-  }
-  100% {
-    width: 0;
-  }
-}
