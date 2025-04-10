@@ -1,13 +1,18 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'input-text',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.css'
 })
 export class InputTextComponent {
   @ViewChild('autosizeTextarea') textarea!: ElementRef<HTMLTextAreaElement>;
+  @Output() newMessage = new EventEmitter<string>();
+  @Input() showPlaceholder: boolean = true;
+
+  userInput = '';
 
   autoResizeTextArea(): void {
     const el = this.textarea.nativeElement;
@@ -21,6 +26,19 @@ export class InputTextComponent {
     } else {
       el.style.overflowY = 'auto';
       el.style.height = `${maxHeight}px`;
+    }
+  }
+
+  // Emitir el mensaje del usuario al componente padre (app.component)
+  sendMessage() {
+    const message = this.userInput.trim();
+    if (message) {
+      this.newMessage.emit(message);
+      this.userInput = '';
+
+       // Resetear altura del textarea
+      const textareaEl = this.textarea.nativeElement;
+      textareaEl.style.height = 'auto'; // Reinicia la altura
     }
   }
 }

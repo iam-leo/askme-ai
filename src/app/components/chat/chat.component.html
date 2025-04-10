@@ -1,0 +1,10 @@
+<div  *ngIf="messages.length > 0" class="flex flex-col w-[450px] md:w-[500px] lg:w-[800px] mb-4 bg-gray-900/20 rounded-lg text-white p-4 overflow-hidden">
+    <div class="flex-1 overflow-y-auto space-y-2 pr-2">
+        <div *ngFor="let msg of messages" class="flex" [ngClass]="{'justify-end': msg.from === 'user', 'justify-start': msg.from === 'ai'}">
+            <div class="max-w-[70%] px-4 py-2 break-words overflow-hidden"
+                [ngClass]="msg.from === 'user' ? ' bg-indigo-700 text-white rounded-2xl rounded-br-none' : 'bg-gray-300 text-black rounded-2xl rounded-bl-none' ">
+                {{ msg.content }}
+            </div>
+        </div>
+    </div>
+</div>
