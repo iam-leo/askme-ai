@@ -1,10 +1,17 @@
 <div  *ngIf="messages.length > 0" class="flex flex-col w-[450px] md:w-[500px] lg:w-[800px] mb-4 bg-gray-900/20 rounded-lg text-white p-4 overflow-hidden">
     <div class="flex-1 overflow-y-auto">
-        <div *ngFor="let msg of messages" class="flex" [ngClass]="{'justify-end': msg.from === 'user', 'justify-start': msg.from === 'ai'}">
+        <div *ngFor="let msg of messages; let i = index" class="flex" [ngClass]="{'justify-end': msg.from === 'user', 'justify-start': msg.from === 'ai'}">
             <div class="max-w-[70%] px-4 py-2 break-words overflow-hidden mb-2"
-                [ngClass]="msg.from === 'user' ? ' bg-indigo-700 text-white rounded-2xl rounded-br-none' : 'bg-gray-300 text-black rounded-2xl rounded-bl-none' ">
+                [ngClass]="msg.from === 'user' ? ' bg-indigo-700 text-white rounded-2xl rounded-br-none' : 'bg-gray-300 text-black rounded-2xl rounded-bl-none' "
+                *ngIf="msg.content.trim() !== ''">
                 {{ msg.content }}
             </div>
+            <!-- Mostrar spinner solo si: es IA, está pensando, es el último mensaje y aún no hay contenido -->
+            <ng-container *ngIf="msg.from === 'ai' && isThinking && i === messages.length - 1 && msg.content.trim() === ''">
+                <div class="px-4 py-2 mb-2 text-black">
+                    <spinner />
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

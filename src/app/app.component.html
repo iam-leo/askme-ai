@@ -3,8 +3,8 @@
     <h1 class="text-3xl md:text-5xl lg:text-7xl font-orbitron font-semibold text-transparent bg-clip-text bg-gradient-to-tr from-slate-300 via-slate-100 to-fuchsia-600"> AskMe AI</h1>
 </header>
 <main class="flex flex-col justify-center items-center w-full lg:w-[1200px] mx-auto">
-    <chat [messages]="messages"/>
-    <input-text 
+    <chat [messages]="messages" [isThinking]="isThinking"/>
+    <input-text
         (newMessage)="handleNewMessage($event)"
         [showPlaceholder]="messages.length === 0"
     />
