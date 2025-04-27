@@ -12,7 +12,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 })
 
 export class ChatComponent {
-   @Input() messages: { from: string, content: string }[] = [];
+   @Input() messages: { from: string, content: string, timestamp: Date }[] = [];
    @Input() isThinking: boolean = false;
 
   }

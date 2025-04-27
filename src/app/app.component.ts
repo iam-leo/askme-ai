@@ -20,10 +20,10 @@ export class AppComponent {
    constructor(private aiService: AiChatService) {}
 
   async handleNewMessage(message: string) {
-    this.messages.push({ from: 'user', content: message });
+    this.messages.push({ from: 'user', content: message, timestamp: new Date() });
 
     // Respuesta de AI
-    const aiMessage: ChatMessage = { from: 'ai', content: '' };
+    const aiMessage: ChatMessage = { from: 'ai', content: '', timestamp: new Date() };
     this.messages.push(aiMessage);
 
     // Mostrar Spinner
@@ -37,6 +37,9 @@ export class AppComponent {
           await new Promise(resolve => setTimeout(resolve, 30));
         }
       }
+      aiMessage.timestamp = new Date(); // Actualizar timestamp después de recibir la respuesta
+      this.messages[this.messages.length - 1] = aiMessage; // Actualizar el mensaje AI en la lista
+      console.log(this.messages);
     } catch (error: any) {
         console.error('App Component Error:', error);
 
