@@ -1,6 +1,6 @@
 <form class="mx-auto mb-4" (submit)="sendMessage(); $event.preventDefault()">
     <div
-        class="relative w-[450px] md:w-[500px] lg:w-[800px] flex justify-center items-center gap-2.5 border border-gray-300 rounded-lg bg-gray-50 dark:bg-indigo-950/50 dark:border-gray-600 dark:text-white px-4 p-2 py-3">
+        class="relative w-[310px] md:w-[500px] lg:w-[800px] flex justify-center items-center gap-2.5 border border-gray-300 rounded-lg bg-gray-50 dark:bg-indigo-950/50 dark:border-gray-600 dark:text-white px-4 p-2 py-3">
 
         <textarea #autosizeTextarea rows="1" (input)="autoResizeTextArea()" (keydown.enter)="sendMessage(); $event.preventDefault()" [(ngModel)]="userInput" name="userInput"
             class="custom-scroll w-full p-1 text-base leading-snug text-gray-900 dark:text-white resize-none overflow-y-auto max-h-[6rem] dark:placeholder-gray-400 placeholder:text-center focus:outline-none focus:ring-0"

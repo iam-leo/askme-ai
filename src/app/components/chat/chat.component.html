@@ -1,4 +1,4 @@
-<div  *ngIf="messages.length > 0" class="flex flex-col w-[450px] md:w-[500px] lg:w-[800px] mb-4 bg-gray-900/20 rounded-lg text-white p-4 overflow-hidden">
+<div  *ngIf="messages.length > 0" class="flex flex-col w-[310px] md:w-[500px] lg:w-[800px] mb-4 bg-gray-900/20 rounded-lg text-white p-2.5 md:p-4 overflow-hidden">
     <div class="flex-1 overflow-y-auto">
         <div *ngFor="let msg of messages; let i = index" class="flex" [ngClass]="{'justify-end': msg.from === 'user', 'justify-start': msg.from === 'ai'}">
             <div class="max-w-[70%] px-4 py-2.5 break-words overflow-hidden mb-2 relative"
