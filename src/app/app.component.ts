@@ -6,10 +6,11 @@ import { ChatMessage } from './interfaces/chat-message';
 import { NgClass } from '@angular/common';
 import { AiChatService } from './services/ai-chat.service';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [InputTextComponent, ChatComponent],
+  imports: [InputTextComponent, ChatComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
