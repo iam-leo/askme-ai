@@ -1,31 +1,47 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { InputTextComponent } from "./components/input-text/input-text.component";
 import { ChatComponent } from './components/chat/chat.component';
 import { ChatMessage } from './interfaces/chat-message';
-import { NgClass } from '@angular/common';
 import { AiChatService } from './services/ai-chat.service';
-import { SpinnerComponent } from './components/spinner/spinner.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [InputTextComponent, ChatComponent, FooterComponent],
+  imports: [CommonModule, InputTextComponent, ChatComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   messages: ChatMessage[] = [];
   isThinking = false;
 
-   constructor(private aiService: AiChatService) {}
+  constructor(private aiService: AiChatService) { }
+
+  ngOnInit() {
+    // Cargar mensajes desde localStorage al iniciar
+    const stored = localStorage.getItem('chatMessages');
+
+    // Si hay mensajes guardados, cargarlos
+    // y convertir el timestamp a Date
+    if (stored) {
+      const rawMessages = JSON.parse(stored);
+      this.messages = rawMessages.map((msg: any) => ({
+        ...msg,
+        timestamp: new Date(msg.timestamp) // <- convertir a Date
+      }));
+    }
+  }
 
   async handleNewMessage(message: string) {
     this.messages.push({ from: 'user', content: message, timestamp: new Date() });
+    // Guardar mensajes del user en localStorage
+    this.saveMessagesToLocalStorage();
 
     // Respuesta de AI
     const aiMessage: ChatMessage = { from: 'ai', content: '', timestamp: new Date() };
     this.messages.push(aiMessage);
+
 
     // Mostrar Spinner
     this.isThinking = true;
@@ -40,7 +56,9 @@ export class AppComponent {
       }
       aiMessage.timestamp = new Date(); // Actualizar timestamp después de recibir la respuesta
       this.messages[this.messages.length - 1] = aiMessage; // Actualizar el mensaje AI en la lista
-      console.log(this.messages);
+
+      // Guardar mensajes de AI en localStorage
+      this.saveMessagesToLocalStorage();
     } catch (error: any) {
         console.error('App Component Error:', error);
 
@@ -54,7 +72,15 @@ export class AppComponent {
     } finally {
         this.isThinking = false; // Ocultar spinner
     }
-
-    console.log(this.messages);
   }
+
+  saveMessagesToLocalStorage() {
+    localStorage.setItem('chatMessages', JSON.stringify(this.messages));
+  }
+
+  clearChat() {
+    this.messages = [];
+    localStorage.removeItem('chatMessages');
+  }
+
 }
