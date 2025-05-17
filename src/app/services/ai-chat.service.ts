@@ -15,10 +15,11 @@ export class AiChatService {
 
   });
 
-  async* getStreamedResponse(prompt: string): AsyncGenerator<string> {
+  async* getStreamedResponse(prompt: string, model: string): AsyncGenerator<string> {
     try{
       const result = streamText({
-        model: this.openrouter('meta-llama/llama-3.3-70b-instruct:free'),
+        model: this.openrouter(model),
+        //model: this.openrouter('meta-llama/llama-3.3-70b-instruct:free'),
         // model: this.openrouter('google/gemini-2.0-flash-exp:free'),
         // model: this.openrouter('thudm/glm-z1-9b:free'),
         // model: this.openrouter('microsoft/mai-ds-r1:free'),

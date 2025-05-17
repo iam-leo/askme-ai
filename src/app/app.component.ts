@@ -1,22 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { InputTextComponent } from "./components/input-text/input-text.component";
 import { ChatComponent } from './components/chat/chat.component';
 import { ChatMessage } from './interfaces/chat-message';
 import { AiChatService } from './services/ai-chat.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, InputTextComponent, ChatComponent, FooterComponent],
+  imports: [CommonModule,FormsModule, InputTextComponent, ChatComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   messages: ChatMessage[] = [];
   isThinking = false;
+  selectedModel = 'meta-llama/llama-3.3-70b-instruct:free';
+  models = [
+    { name: 'Meta Llama 3.3 70B Instruct', value: 'meta-llama/llama-3.3-70b-instruct:free' },
+    { name: 'Google Gemini 2.0 Flash Exp', value: 'google/gemini-2.0-flash-exp:free' },
+    { name: 'Thudm Glm Z1 9B', value: 'thudm/glm-z1-9b:free' },
+    { name: 'Microsoft Mai Ds R1', value: 'microsoft/mai-ds-r1:free' }
+  ];
 
-  constructor(private aiService: AiChatService) { }
+  constructor(private aiService: AiChatService, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     // Cargar mensajes desde localStorage al iniciar
@@ -34,13 +43,16 @@ export class AppComponent implements OnInit {
   }
 
   async handleNewMessage(message: string) {
-    this.messages.push({ from: 'user', content: message, timestamp: new Date() });
+    //this.messages.push({ from: 'user', content: message, timestamp: new Date() });
+    this.messages = [...this.messages, { from: 'user', content: message, timestamp: new Date() }];
+
     // Guardar mensajes del user en localStorage
     this.saveMessagesToLocalStorage();
 
     // Respuesta de AI
     const aiMessage: ChatMessage = { from: 'ai', content: '', timestamp: new Date() };
-    this.messages.push(aiMessage);
+    //this.messages.push(aiMessage);
+    this.messages = [...this.messages, aiMessage];
 
 
     // Mostrar Spinner
@@ -48,7 +60,7 @@ export class AppComponent implements OnInit {
 
     // Renderizar a medida que llegan los chunks
     try {
-      for await (const chunk of this.aiService.getStreamedResponse(message)) {
+      for await (const chunk of this.aiService.getStreamedResponse(message, this.selectedModel)) {
         for (const char of chunk) {
           aiMessage.content += char;
           await new Promise(resolve => setTimeout(resolve, 30));
@@ -71,6 +83,7 @@ export class AppComponent implements OnInit {
         }
     } finally {
         this.isThinking = false; // Ocultar spinner
+        this.changeDetector.detectChanges(); // Forzar la detección de cambios
     }
   }
 

@@ -4,7 +4,8 @@
             <div class="max-w-[70%] px-4 py-2.5 break-words overflow-hidden mb-2 relative"
                 [ngClass]="msg.from === 'user' ? ' bg-indigo-700 text-white rounded-2xl rounded-br-none' : 'bg-gray-300 text-black rounded-2xl rounded-bl-none' "
                 *ngIf="msg.content.trim() !== ''">
-                {{ msg.content }}
+                <!-- {{ msg.content }} -->
+                <div *ngIf="processedMessages[i]" [innerHTML]="processedMessages[i]"></div>
                 <div
                     class="absolute -bottom-0.5"
                     [ngClass]="msg.from === 'user' ? 'text-gray-300 right-1' : 'text-gray-700 right-2.5'"
