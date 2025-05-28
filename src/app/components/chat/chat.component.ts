@@ -1,5 +1,5 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChatMessage } from '../../interfaces/chat-message';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { MarkdownService, provideMarkdown } from 'ngx-markdown';
@@ -14,7 +14,7 @@ import { MarkdownModule } from 'ngx-markdown';
   styleUrl: './chat.component.css'
 })
 
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnChanges {
    @Input() messages: { from: string, content: string, timestamp: Date }[] = [];
    @Input() isThinking: boolean = false;
 
@@ -23,12 +23,19 @@ export class ChatComponent implements OnInit {
     processedMessages: string[] = [];
 
 
-   ngOnInit() {
-     this.processMessages();
-   }
+   ngOnInit() {}
+
+   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['messages'] && changes['messages'].currentValue) {
+      // Esperar al próximo ciclo para asegurar que la vista esté lista
+      Promise.resolve().then(() => this.processMessages());
+    }
+  }
 
    // Método asíncrono para procesar contenido Markdown
    async processMessages() {
+      // Limpiar mensajes procesados
+      this.processedMessages = [];
      for (let msg of this.messages) {
        if (msg.content) {
          // Procesar cada mensaje de contenido Markdown

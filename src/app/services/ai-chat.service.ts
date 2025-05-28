@@ -42,7 +42,6 @@ export class AiChatService {
 
       for await (const chunk of result.textStream) {
         hasReceivedData = true;
-        console.log('chunk: ', chunk);
         yield chunk
       }
 

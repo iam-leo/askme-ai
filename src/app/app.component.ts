@@ -39,6 +39,8 @@ export class AppComponent implements OnInit {
         ...msg,
         timestamp: new Date(msg.timestamp) // <- convertir a Date
       }));
+
+      this.messages = [...this.messages]; // Forzar la detección de cambios para que Angular actualice la vista
     }
   }
 
@@ -63,11 +65,18 @@ export class AppComponent implements OnInit {
       for await (const chunk of this.aiService.getStreamedResponse(message, this.selectedModel)) {
         for (const char of chunk) {
           aiMessage.content += char;
+              // Reemplazar el último mensaje AI con una nueva copia (para cambiar la referencia)
+          this.messages[this.messages.length - 1] = { ...aiMessage };
+
+          // Forzar la actualización al cambiar el array (nueva referencia)
+          this.messages = [...this.messages];
           await new Promise(resolve => setTimeout(resolve, 30));
         }
       }
       aiMessage.timestamp = new Date(); // Actualizar timestamp después de recibir la respuesta
       this.messages[this.messages.length - 1] = aiMessage; // Actualizar el mensaje AI en la lista
+
+      //this.messages = [...this.messages]; // Forzar la detección de cambio
 
       // Guardar mensajes de AI en localStorage
       this.saveMessagesToLocalStorage();
@@ -83,7 +92,7 @@ export class AppComponent implements OnInit {
         }
     } finally {
         this.isThinking = false; // Ocultar spinner
-        this.changeDetector.detectChanges(); // Forzar la detección de cambios
+        //this.changeDetector.detectChanges();
     }
   }
 
