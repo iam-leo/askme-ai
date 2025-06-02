@@ -21,7 +21,10 @@ export class AppComponent implements OnInit {
   models = [
     { name: 'Meta Llama 3.3 70B Instruct', value: 'meta-llama/llama-3.3-70b-instruct:free' },
     { name: 'Google Gemini 2.0 Flash Exp', value: 'google/gemini-2.0-flash-exp:free' },
-    { name: 'Thudm Glm Z1 9B', value: 'thudm/glm-z1-9b:free' },
+    { name: 'DeepSeek R1 Qwen3 8B', value: 'deepseek/deepseek-r1-0528-qwen3-8b:free' },
+    { value: 'mistralai/devstral-small:free', name: 'Mistral DevStral Small' },
+    { value: 'opengvlab/internvl3-14b:free', name: 'OpenGVLab InternVL3 14B' },
+    { value: 'nvidia/llama-3.3-nemotron-super-49b-v1:free', name: 'NVIDIA Llama 3.3 Nemotron Super 49B V1' },
     { name: 'Microsoft Mai Ds R1', value: 'microsoft/mai-ds-r1:free' }
   ];
 
