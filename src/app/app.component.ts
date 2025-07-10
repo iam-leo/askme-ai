@@ -6,11 +6,12 @@ import { AiChatService } from './services/ai-chat.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ScrollToggleButtonComponent } from './components/scroll-toggle-button/scroll-toggle-button.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule,FormsModule, InputTextComponent, ChatComponent, FooterComponent],
+  imports: [CommonModule,FormsModule, InputTextComponent, ChatComponent, FooterComponent, ScrollToggleButtonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
