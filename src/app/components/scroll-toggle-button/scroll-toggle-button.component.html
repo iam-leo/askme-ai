@@ -1,0 +1,8 @@
+<button *ngIf="showScrollButton" (click)="handleClick()"
+    class="fixed bottom-6 right-6 lg:bottom-24 lg:right-14 bg-indigo-600 text-white rounded-full p-2 md:p-3 shadow-lg hover:bg-indigo-700 transition-all z-50 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" [attr.class]="isAtTop ? '' : 'rotate-180'"
+        class="transition-transform duration-300">
+        <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+</button>
