@@ -25,34 +25,31 @@ import { ScrollToggleButtonComponent } from './components/scroll-toggle-button/s
 export class AppComponent implements OnInit {
   messages: ChatMessage[] = [];
   isThinking = false;
-  selectedModel = 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free';
+  selectedModel = 'inclusionai/ling-3.0-flash-fin:free'; // Modelo por defecto
   models = [
     {
-      name: 'NVIDIA Nemotron 3 Nano Omni',
-      value: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
+      name: 'Dots 3 Note',
+      value: 'dots-studio/dots-3-note-preview:free',
     },
     {
-      name: 'Google Gemma 4',
-      value: 'google/gemma-4-26b-a4b-it:free',
+      name: 'Ling 3.0 Flash',
+      value: 'inclusionai/ling-3.0-flash-fin:free',
     },
     {
-      name: 'MiniMax M2.5',
-      value: 'minimax/minimax-m2.5:free',
+      name: 'MiniMax M3',
+      value: 'minimax/minimax-m3:free',
     },
     {
-      name: 'Poolside Laguna XS.2',
-      value: 'poolside/laguna-xs.2:free',
+      name: 'LiquidAI LFM2.5',
+      value: 'liquid/lfm-2.5-2.6b:free',
     },
     {
-      name: 'OpenAI: gpt-oss-120b',
-      value: 'openai/gpt-oss-120b:free',
+      name: 'Poolside Laguna S 2.1',
+      value: 'poolside/laguna-s-2.1:free',
     },
     {
-      name: 'Baidu Qianfan-OCR-Fast',
-      value: 'baidu/qianfan-ocr-fast:free',
-    },
-    { name: 'LiquidAI LFM2.5-1.2B-Thinking',
-      value: 'liquid/lfm-2.5-1.2b-thinking:free'
+      name: 'Cohere North Mini Code',
+      value: 'cohere/north-mini-code:free',
     },
   ];
 
